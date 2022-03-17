@@ -14,3 +14,16 @@ const fun = () => new Promise((resolve) => {
 fun().then(() => {
     console.log('1s after');
 })
+
+class Index{
+    constructor(){
+        this.event()
+    }
+    event(){
+        document.querySelector('.toLogin').onclick = () => {
+            window.location.href = './login.html'
+        }
+    }
+}
+
+new Index()

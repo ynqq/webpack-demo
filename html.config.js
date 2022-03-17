@@ -1,5 +1,5 @@
 module.exports = {
-    baseJs: ['babel-polyfill', './src/js/rem.js'],
+    baseJs: ['./src/js/rem.js', 'babel-polyfill'],
     routes: {
         index: './src/app/index',
         login: './src/app/login',
