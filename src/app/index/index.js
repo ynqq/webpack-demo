@@ -2,7 +2,7 @@ import '/src/css/reset.css'
 import '/src/css/test.scss'
 import print from './print'
 
-print.log('22', 'new----')
+print.log('22', 'new----', '22222')
 console.log(process.env);
 
 const fun = () => new Promise((resolve) => {
