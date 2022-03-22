@@ -2,7 +2,7 @@ import '/src/css/reset.css'
 import '/src/css/test.scss'
 import print from './print'
 
-print.log('22')
+print.log('22', 'main')
 console.log(process.env);
 
 const fun = () => new Promise((resolve) => {
