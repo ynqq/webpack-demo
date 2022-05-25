@@ -31,7 +31,7 @@ module.exports = (env) => {
     const NODE_ENV = process.env.NODE_ENV
     const envPath = path.resolve(__dirname, './.env.' + env.mode)
     let smp = new SpeedMeasureWebpackPlugin()
-    return smp.wrap({
+    const config = smp.wrap({
         entry: entry,
         mode: 'production',
         output: {
@@ -73,10 +73,13 @@ module.exports = (env) => {
             new DefinePlugin( // 将process添加到浏览器
                 { 'process.env': require(envPath) }
             ),
-            new MiniCssExtractPlugin({
-                filename: 'css/[name].css'
-            }),
-            ...plugin,
+            ...plugin
         ]
     })
+    config.plugins.push(
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css'
+        })
+    )
+    return config
 }
