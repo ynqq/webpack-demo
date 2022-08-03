@@ -3,36 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { DefinePlugin } = require('webpack')
-const HtmlConfig = require('./html.config')
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin')
 
-
-function getEntry() {
-    const { baseJs, routes } = HtmlConfig
-    let entry = {}, plugin = []
-    for (let i in routes) {
-        entry[i] = [...baseJs, `./src/app/${i}/index.js`]
-        plugin.push(new HtmlWebpackPlugin({
-            // title: '登录',
-            template: `./src/app/${i}/index.html`,
-            filename: i + '.html',
-            chunks: [i]
-        }))
-    }
-    return {
-        entry,
-        plugin
-    }
-}
-
-const { entry, plugin } = getEntry()
 
 module.exports = (env) => {
     const NODE_ENV = process.env.NODE_ENV
     const envPath = path.resolve(__dirname, './.env.' + env.mode)
     let smp = new SpeedMeasureWebpackPlugin()
     const config = smp.wrap({
-        entry: entry,
+        entry: './src/app/index.js',
         mode: 'production',
         output: {
             filename: 'js/[name].[hash].js',
@@ -73,7 +52,10 @@ module.exports = (env) => {
             new DefinePlugin( // 将process添加到浏览器
                 { 'process.env': require(envPath) }
             ),
-            ...plugin
+            new HtmlWebpackPlugin({
+                template: `./public/index.html`,
+                filename: 'index.html'
+            })
         ]
     })
     config.plugins.push(
